@@ -1,0 +1,167 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden; /* 羊が画面外から飛び出すため */
+    position: relative; /* 羊の絶対配置の基準 */
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    z-index: 1; /* To-Doリストが羊の上に表示されるように */
+    position: relative;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.input-area {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+#todo-input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+#todo-input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+#add-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+#add-button:hover {
+    background-color: #0056b3;
+}
+
+#todo-list {
+    list-style: none;
+    padding: 0;
+}
+
+#todo-list li {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 4px;
+    font-size: 17px;
+    color: #555;
+}
+
+#todo-list li.completed {
+    text-decoration: line-through;
+    color: #999;
+    background-color: #e0ffe0; /* 完了時の背景色 */
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.actions button {
+    background-color: #28a745; /* 完了ボタン */
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.actions button.delete {
+    background-color: #dc3545; /* 削除ボタン */
+}
+
+.actions button:hover {
+    opacity: 0.9;
+}
+
+.actions button.delete:hover {
+    background-color: #c82333;
+}
+
+/* 羊のスタイル */
+.sheep {
+    position: absolute;
+    width: 80px; /* 羊の幅 */
+    height: 80px; /* 羊の高さ */
+    background-image: url('sheep.png'); /* ここに羊の画像パスを指定 */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    bottom: -100px; /* 初期位置：画面の下から見えないように */
+    left: 50%; /* 水平中央に配置 */
+    transform: translateX(-50%);
+    opacity: 0; /* 初期は非表示 */
+    pointer-events: none; /* クリックできないように */
+    z-index: 0; /* To-Doリストの下に表示 */
+}
+
+/* 羊が飛び出すアニメーション */
+.sheep.jump {
+    animation: jumpOut 1.5s ease-out forwards;
+}
+
+@keyframes jumpOut {
+    0% {
+        bottom: -100px;
+        opacity: 0;
+        transform: translateX(-50%) scale(0.8);
+    }
+    20% {
+        bottom: 50px; /* 画面内に飛び出す */
+        opacity: 1;
+        transform: translateX(-50%) scale(1.1);
+    }
+    40% {
+        bottom: 0px; /* 少し沈む */
+        transform: translateX(-50%) scale(1);
+    }
+    60% {
+        bottom: 20px; /* 再び少し浮く */
+        transform: translateX(-50%) scale(1.05);
+    }
+    80% {
+        bottom: -50px; /* 画面外へ消え始める */
+        opacity: 0.5;
+        transform: translateX(-50%) scale(0.9);
+    }
+    100% {
+        bottom: -150px; /* 完全に画面外へ */
+        opacity: 0;
+        transform: translateX(-50%) scale(0.7);
+    }
+}
